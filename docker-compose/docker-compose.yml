@@ -1,0 +1,23 @@
+services:
+  comfy-ui:
+    build:
+      context: ../.
+      dockerfile: Dockerfile/Dockerfile
+    image: comfy-ui
+    container_name: comfy-ui
+    volumes:
+      - ../models/checkpoint:/ComfyUI/models/checkpoints
+      - ../output:/ComfyUI/output
+    working_dir: /ComfyUI
+    tty: true
+    ports:
+      - "8188:8188"
+    # entrypoint: sh -c "python main.py --listen"
+
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
