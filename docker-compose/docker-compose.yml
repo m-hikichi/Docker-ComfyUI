@@ -3,7 +3,7 @@ services:
     build:
       context: ../.
       dockerfile: Dockerfile/Dockerfile
-    image: comfy-ui
+    image: comfy-ui:v0.3.49
     container_name: comfy-ui
     volumes:
       - ../models/checkpoint:/ComfyUI/models/checkpoints
@@ -12,7 +12,7 @@ services:
     tty: true
     ports:
       - "8188:8188"
-    # entrypoint: sh -c "python main.py --listen"
+    # entrypoint: sh -c "pip install comfy-cli && comfy install && python main.py --listen"
 
     deploy:
       resources:

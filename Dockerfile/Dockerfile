@@ -8,4 +8,4 @@ RUN pip install comfy-cli
 RUN pip install torch torchvision torchaudio
 
 # clone ComfyUI
-RUN git clone https://github.com/comfyanonymous/ComfyUI.git -b v0.3.27
+RUN git clone https://github.com/comfyanonymous/ComfyUI.git -b v0.3.49
