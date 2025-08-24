@@ -6,7 +6,7 @@ services:
     image: comfy-ui:v0.3.49
     container_name: comfy-ui
     volumes:
-      - ../models/checkpoint:/ComfyUI/models/checkpoints
+      - ../models/Qwen-Image:/ComfyUI/models
       - ../output:/ComfyUI/output
     working_dir: /ComfyUI
     tty: true
