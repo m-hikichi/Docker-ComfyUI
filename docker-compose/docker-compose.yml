@@ -6,8 +6,12 @@ services:
     image: comfy-ui:v0.5.0
     container_name: comfy-ui
     volumes:
+      # --- Stable Diffusion系 ---
       - ../models/Illustrious/Checkpoint:/ComfyUI/models/checkpoints
       - ../models/Illustrious/LoRA:/ComfyUI/models/loras
+      # --- Qwen Image系 ---
+      # - ../models/Qwen-Image:/ComfyUI/models
+      # --- 出力 ---
       - ../output:/ComfyUI/output
     ports:
       - "8188:8188"
