@@ -11,6 +11,8 @@ services:
       - ../models/Illustrious/LoRA:/ComfyUI/models/loras
       # --- Qwen Image系 ---
       # - ../models/Qwen-Image:/ComfyUI/models
+      # --- wan2.2系 ---
+      # - ../models/wan2.2/wan2.2_ti2v_5B:/ComfyUI/models
       # --- 出力 ---
       - ../output:/ComfyUI/output
     ports:
