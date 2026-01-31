@@ -1,23 +1,33 @@
 FROM python:3.12
 
-ARG COMFYUI_VERSION=v0.5.0
+ARG COMFYUI_VERSION=v0.11.0
+# CUDA 13.0 wheels を使う想定。環境に合わせて cu128 / cu121 / cpu などに変更してください。
+ARG TORCH_INDEX_URL=https://download.pytorch.org/whl/cu130
 
-# git が必要（cloneするため）
-RUN apt-get update && apt-get install -y --no-install-recommends git \
-  && rm -rf /var/lib/apt/lists/*
+ENV PIP_DISABLE_PIP_VERSION_CHECK=1 \
+    PIP_NO_CACHE_DIR=1 \
+    HF_HUB_OFFLINE=1 \
+    TRANSFORMERS_OFFLINE=1 \
+    DIFFUSERS_OFFLINE=1
 
-# PyTorch（NVIDIAでGPUを使うなら、通常は extra-index-url が必要です）
-# ComfyUI README でも NVIDIA 用インストール例が案内されています :contentReference[oaicite:3]{index=3}
-# ※CUDAの版はホスト/ドライバに合わせて調整してください
-RUN pip install --no-cache-dir torch torchvision torchaudio \
-    --extra-index-url https://download.pytorch.org/whl/cu130
+# runtime で必要になりがちなライブラリ（opencv / av / 動画周り）
+RUN apt-get update && apt-get install -y --no-install-recommends \
+      git \
+      ffmpeg \
+      libgl1 \
+      libglib2.0-0 \
+    && rm -rf /var/lib/apt/lists/*
 
 # ComfyUI 本体
-RUN git clone --depth 1 --branch ${COMFYUI_VERSION} https://github.com/comfyanonymous/ComfyUI.git /ComfyUI
+RUN git clone --depth 1 --branch ${COMFYUI_VERSION} https://github.com/Comfy-Org/ComfyUI.git /ComfyUI
 
 WORKDIR /ComfyUI
 
-# 依存関係（これが重要）
+# 先に CUDA 版 torch を入れておく（requirements 内の torch を満たすため）
+RUN pip install --no-cache-dir --index-url ${TORCH_INDEX_URL} \
+      torch torchvision torchaudio
+
+# 依存関係
 RUN pip install --no-cache-dir -r requirements.txt
 
 EXPOSE 8188
