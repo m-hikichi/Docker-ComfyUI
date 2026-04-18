@@ -1,6 +1,6 @@
 FROM python:3.12
 
-ARG COMFYUI_VERSION=v0.11.0
+ARG COMFYUI_VERSION=v0.19.0
 # CUDA 13.0 wheels を使う想定。環境に合わせて cu128 / cu121 / cpu などに変更してください。
 ARG TORCH_INDEX_URL=https://download.pytorch.org/whl/cu130
 

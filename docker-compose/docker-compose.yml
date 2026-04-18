@@ -3,7 +3,7 @@ services:
     build:
       context: ../Dockerfile
       dockerfile: Dockerfile
-    image: comfy-ui:v0.11.0
+    image: comfy-ui:v0.19.0
     container_name: comfy-ui
     volumes:
       # --- Stable Diffusion系 ---
