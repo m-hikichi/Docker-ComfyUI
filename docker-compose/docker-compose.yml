@@ -3,8 +3,8 @@ services:
     build:
       context: ../Dockerfile
       dockerfile: Dockerfile
-    image: comfy-ui:v0.19.0
-    container_name: comfy-ui
+    image: comfy-ui:v0.19.0-manager
+    container_name: comfy-ui-manager
     volumes:
       # --- Stable Diffusion系 ---
       - ../models/Illustrious/Checkpoint:/ComfyUI/models/checkpoints
@@ -15,6 +15,11 @@ services:
       # - ../models/wan2.2/wan2.2_ti2v_5B:/ComfyUI/models
       # --- 出力 ---
       - ../output:/ComfyUI/output
+      # --- ComfyUI-Manager / カスタムノード永続化 ---
+      - ../custom_nodes:/ComfyUI/custom_nodes
+      - ../user:/ComfyUI/user
+    environment:
+      COMFYUI_ENABLE_MANAGER: "1"
     ports:
       - "8188:8188"
     tty: true
