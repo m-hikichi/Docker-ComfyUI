@@ -1,0 +1,15 @@
+# Manager あり構成（既定）。docker-compose.yml に重ねて使う差分。
+#   docker compose up -d --build   # docker-compose ディレクトリ内ならこのファイルが自動適用される
+name: comfy-ui-manager
+
+services:
+  comfy-ui:
+    container_name: comfy-ui-manager
+    environment:
+      # Manager を有効化（entrypoint が --enable-manager を付与する）。
+      COMFYUI_ENABLE_MANAGER: "1"
+    volumes:
+      # ComfyUI-Manager で入れたカスタムノードと Manager 設定をホストに永続化。
+      # base の volumes に追記される。
+      - ../custom_nodes:/ComfyUI/custom_nodes
+      - ../user:/ComfyUI/user
