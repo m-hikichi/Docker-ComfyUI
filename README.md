@@ -2,7 +2,7 @@
 
 ## 画像からDanbooruタグを抽出
 
-同梱の `workflows/image-to-danbooru-tags.json` は、画像を読み込み、
+同梱の `workflows/tagging/image-to-danbooru-tags.json` は、画像を読み込み、
 [WD14 Tagger](https://github.com/pythongosssss/ComfyUI-WD14-Tagger) でタグを抽出してノード内に表示します。
 生成用チェックポイントは不要です。タグ推論はCPU版ONNX Runtimeで実行します。
 既存のCompose設定はNVIDIA GPUを要求します。
@@ -16,7 +16,7 @@ docker compose -f docker-compose/docker-compose.yml up -d --build
 ```
 
 1. <http://localhost:8188> を開きます。
-2. ワークフロー一覧の `repository/image-to-danbooru-tags` を開きます。一覧に出ない場合は `workflows/image-to-danbooru-tags.json` を画面へドラッグして読み込みます。
+2. ワークフロー一覧の `repository/tagging/image-to-danbooru-tags` を開きます。一覧に出ない場合は `workflows/tagging/image-to-danbooru-tags.json` を画面へドラッグして読み込みます。
 3. `LoadImage` で対象画像をアップロードします。
 4. 実行すると、`WD14 Tagger` ノード内にカンマ区切りのタグが表示されます。表示欄からコピーできます。
 
