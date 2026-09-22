@@ -9,6 +9,12 @@ services:
       # --- Stable Diffusion系 ---
       - ../models/Illustrious/Checkpoint:/ComfyUI/models/checkpoints
       - ../models/Illustrious/LoRA:/ComfyUI/models/loras
+      # --- Anima ---
+      - ../models/Anima/diffusion_models:/ComfyUI/models/diffusion_models
+      - ../models/Anima/text_encoders:/ComfyUI/models/text_encoders
+      - ../models/Anima/vae:/ComfyUI/models/vae
+      # --- Bundled workflows ---
+      - ../workflows:/ComfyUI/user/default/workflows/repository:ro
       # --- Qwen Image系 ---
       # - ../models/Qwen-Image:/ComfyUI/models
       # --- wan2.2系 ---
