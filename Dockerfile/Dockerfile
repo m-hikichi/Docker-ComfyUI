@@ -1,6 +1,7 @@
 FROM python:3.12
 
 ARG COMFYUI_VERSION=v0.19.0
+ARG WD14_TAGGER_COMMIT=9e0a6e700299182fc05c58b62e7ad9f72182a78b
 # CUDA 13.0 wheels を使う想定。環境に合わせて cu128 / cu121 / cpu などに変更してください。
 ARG TORCH_INDEX_URL=https://download.pytorch.org/whl/cu130
 
@@ -29,6 +30,11 @@ RUN pip install --no-cache-dir --index-url ${TORCH_INDEX_URL} \
 
 # 依存関係
 RUN pip install --no-cache-dir -r requirements.txt
+
+# Image-to-Danbooru tagging (CPU ONNX Runtime; independent of CUDA).
+RUN git clone https://github.com/pythongosssss/ComfyUI-WD14-Tagger.git custom_nodes/ComfyUI-WD14-Tagger \
+    && git -C custom_nodes/ComfyUI-WD14-Tagger checkout --detach ${WD14_TAGGER_COMMIT} \
+    && pip install --no-cache-dir -r custom_nodes/ComfyUI-WD14-Tagger/requirements.txt
 
 EXPOSE 8188
 CMD ["python", "main.py", "--listen", "0.0.0.0", "--port", "8188"]

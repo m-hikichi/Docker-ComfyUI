@@ -9,6 +9,9 @@ services:
       # --- Stable Diffusion系 ---
       - ../models/Illustrious/Checkpoint:/ComfyUI/models/checkpoints
       - ../models/Illustrious/LoRA:/ComfyUI/models/loras
+      # --- Danbooru tagger model cache / bundled workflows ---
+      - ../models/wd14_tagger:/ComfyUI/custom_nodes/ComfyUI-WD14-Tagger/models
+      - ../workflows:/ComfyUI/user/default/workflows/repository:ro
       # --- Qwen Image系 ---
       # - ../models/Qwen-Image:/ComfyUI/models
       # --- wan2.2系 ---
