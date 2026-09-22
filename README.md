@@ -8,10 +8,10 @@
 ```text
 workflows/
 `-- inpaint/
-|   |-- stable-diffusion/
-|   |   `-- stable-diffusion-masked-image-inpaint.json
-|   `-- anima/
-|       `-- anima-masked-image-inpaint.json
+    |-- stable-diffusion/
+    |   `-- stable-diffusion-masked-image-inpaint.json
+    `-- anima/
+        `-- anima-masked-image-inpaint.json
 ```
 
 ComfyUIのワークフロー一覧には、`repository/` 以下に同じフォルダー構成で表示されます。
