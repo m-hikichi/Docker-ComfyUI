@@ -7,15 +7,15 @@ services:
     container_name: comfy-ui
     volumes:
       # --- Stable Diffusion系 ---
-      - ../models/Illustrious/Checkpoint:/ComfyUI/models/checkpoints
-      - ../models/Illustrious/LoRA:/ComfyUI/models/loras
+      - ../models/Illustrious/Checkpoint:/ComfyUI/models/checkpoints:ro
+      - ../models/Illustrious/LoRA:/ComfyUI/models/loras:ro
       # --- Anima ---
-      - ../models/Anima/diffusion_models:/ComfyUI/models/diffusion_models
-      - ../models/Anima/text_encoders:/ComfyUI/models/text_encoders
-      - ../models/Anima/vae:/ComfyUI/models/vae
-      - ../models/Anima/loras:/ComfyUI/models/loras/anima
+      - ../models/Anima/diffusion_models:/ComfyUI/models/diffusion_models:ro
+      - ../models/Anima/text_encoders:/ComfyUI/models/text_encoders:ro
+      - ../models/Anima/vae:/ComfyUI/models/vae:ro
+      - ../models/Anima/loras:/ComfyUI/models/loras/anima:ro
       # --- Shared upscalers / bundled workflows ---
-      - ../models/upscale_models:/ComfyUI/models/upscale_models
+      - ../models/upscale_models:/ComfyUI/models/upscale_models:ro
       - ../workflows:/ComfyUI/user/default/workflows/repository:ro
       # --- Qwen Image系 ---
       # - ../models/Qwen-Image:/ComfyUI/models
