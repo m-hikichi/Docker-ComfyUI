@@ -1,0 +1,1584 @@
+{
+  "last_node_id": 35,
+  "last_link_id": 27,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "Note",
+      "title": "モデルの準備",
+      "pos": [
+        20,
+        50
+      ],
+      "size": [
+        360,
+        180
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "Note"
+      },
+      "widgets_values": [
+        "Anima Base v1用。\n拡散モデル / Qwen3 / Qwen Image VAE の3ファイルを選択。\nCLIPのtypeは stable_diffusion。\nLoRAなしで開始できます。"
+      ]
+    },
+    {
+      "id": 2,
+      "type": "UNETLoader",
+      "title": "拡散モデル: Anima Base v1",
+      "pos": [
+        20,
+        280
+      ],
+      "size": [
+        360,
+        100
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            1
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "UNETLoader"
+      },
+      "widgets_values": [
+        "anima-base-v1.0.safetensors",
+        "default"
+      ]
+    },
+    {
+      "id": 3,
+      "type": "CLIPLoader",
+      "title": "テキスト: Qwen3 0.6B",
+      "pos": [
+        20,
+        440
+      ],
+      "size": [
+        360,
+        130
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            13,
+            15
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPLoader"
+      },
+      "widgets_values": [
+        "qwen_3_06b_base.safetensors",
+        "stable_diffusion",
+        "default"
+      ]
+    },
+    {
+      "id": 4,
+      "type": "VAELoader",
+      "title": "VAE: Qwen Image",
+      "pos": [
+        20,
+        630
+      ],
+      "size": [
+        360,
+        70
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            22
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAELoader"
+      },
+      "widgets_values": [
+        "qwen_image_vae.safetensors"
+      ]
+    },
+    {
+      "id": 5,
+      "type": "Note",
+      "title": "LoRAの使い方",
+      "pos": [
+        20,
+        740
+      ],
+      "size": [
+        360,
+        170
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "Note"
+      },
+      "widgets_values": [
+        "初期状態: 2枠ともバイパス（無効）。\nファイルを選び、右クリック > Mode > Alwaysで有効化。\n戻すときはMode > Bypass。\n対応するモデル系統のLoRAのみ使用。\nトリガー語は意味に合うプロンプト欄へ。"
+      ]
+    },
+    {
+      "id": 6,
+      "type": "LoraLoaderModelOnly",
+      "title": "LoRA 1（初期状態: 無効）",
+      "pos": [
+        20,
+        960
+      ],
+      "size": [
+        360,
+        120
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 1
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            2
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoraLoaderModelOnly"
+      },
+      "widgets_values": [
+        "",
+        0.7
+      ]
+    },
+    {
+      "id": 7,
+      "type": "LoraLoaderModelOnly",
+      "title": "LoRA 2（初期状態: 無効）",
+      "pos": [
+        20,
+        1120
+      ],
+      "size": [
+        360,
+        120
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 2
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            17
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoraLoaderModelOnly"
+      },
+      "widgets_values": [
+        "",
+        0.7
+      ]
+    },
+    {
+      "id": 8,
+      "type": "Note",
+      "title": "最初は例文の人物・服装・背景だけ変更",
+      "pos": [
+        450,
+        50
+      ],
+      "size": [
+        790,
+        200
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "Note"
+      },
+      "widgets_values": [
+        "Anima公式のタグ順を接続で固定しています。\n小文字の英語タグをカンマ区切りで入力。アンダースコアは空白へ（score_7等は例外）。\n03～05は不要なら空欄。作者を指定する場合は名前の前に @ を付けます。\nLoRAのトリガーも人物なら03、作品なら04、その他なら06へ。\nAestheticでは01とNegativeからscore_*を削除。Turboは別の生成設定が必要です。"
+      ]
+    },
+    {
+      "id": 9,
+      "type": "PrimitiveStringMultiline",
+      "title": "01 品質 / メタ / 年 / 安全性",
+      "pos": [
+        450,
+        310
+      ],
+      "size": [
+        380,
+        155
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            3
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PrimitiveStringMultiline"
+      },
+      "widgets_values": [
+        "masterpiece, best quality, score_7, safe"
+      ]
+    },
+    {
+      "id": 10,
+      "type": "PrimitiveStringMultiline",
+      "title": "02 人数 / 主体",
+      "pos": [
+        850,
+        310
+      ],
+      "size": [
+        380,
+        155
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            4
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PrimitiveStringMultiline"
+      },
+      "widgets_values": [
+        "1girl, solo"
+      ]
+    },
+    {
+      "id": 11,
+      "type": "PrimitiveStringMultiline",
+      "title": "03 キャラクター（任意）",
+      "pos": [
+        450,
+        515
+      ],
+      "size": [
+        380,
+        155
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            6
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PrimitiveStringMultiline"
+      },
+      "widgets_values": [
+        ""
+      ]
+    },
+    {
+      "id": 12,
+      "type": "PrimitiveStringMultiline",
+      "title": "04 作品名（任意）",
+      "pos": [
+        850,
+        515
+      ],
+      "size": [
+        380,
+        155
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            8
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PrimitiveStringMultiline"
+      },
+      "widgets_values": [
+        ""
+      ]
+    },
+    {
+      "id": 13,
+      "type": "PrimitiveStringMultiline",
+      "title": "05 作者 @名前（任意）",
+      "pos": [
+        450,
+        720
+      ],
+      "size": [
+        380,
+        155
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            10
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PrimitiveStringMultiline"
+      },
+      "widgets_values": [
+        ""
+      ]
+    },
+    {
+      "id": 14,
+      "type": "PrimitiveStringMultiline",
+      "title": "06 外見 / 服 / 動作 / 背景 / 光",
+      "pos": [
+        850,
+        720
+      ],
+      "size": [
+        380,
+        155
+      ],
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            12
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PrimitiveStringMultiline"
+      },
+      "widgets_values": [
+        "adult woman, short brown hair, green eyes, white shirt, blue skirt, standing, garden, flowers, sunlight, full body"
+      ]
+    },
+    {
+      "id": 15,
+      "type": "Note",
+      "title": "Negativeには避けたい特徴を入力",
+      "pos": [
+        450,
+        960
+      ],
+      "size": [
+        790,
+        170
+      ],
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "Note"
+      },
+      "widgets_values": [
+        "Positiveには描きたい内容、Negativeには避けたい内容を入力。\nNegativeの初期値はAnima Base向けです。\n入力順は自動で守られますが、欄の意味・綴り・トリガー語の正しさは確認してください。"
+      ]
+    },
+    {
+      "id": 16,
+      "type": "StringConcatenate",
+      "title": "自動結合 01-02",
+      "pos": [
+        1310,
+        75
+      ],
+      "size": [
+        320,
+        60
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 15,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "string_a",
+          "type": "STRING",
+          "link": 3,
+          "widget": {
+            "name": "string_a"
+          }
+        },
+        {
+          "name": "string_b",
+          "type": "STRING",
+          "link": 4,
+          "widget": {
+            "name": "string_b"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            5
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "StringConcatenate"
+      },
+      "widgets_values": [
+        "",
+        "",
+        "\n"
+      ]
+    },
+    {
+      "id": 17,
+      "type": "StringConcatenate",
+      "title": "自動結合 01-03",
+      "pos": [
+        1310,
+        140
+      ],
+      "size": [
+        320,
+        60
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 16,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "string_a",
+          "type": "STRING",
+          "link": 5,
+          "widget": {
+            "name": "string_a"
+          }
+        },
+        {
+          "name": "string_b",
+          "type": "STRING",
+          "link": 6,
+          "widget": {
+            "name": "string_b"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            7
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "StringConcatenate"
+      },
+      "widgets_values": [
+        "",
+        "",
+        "\n"
+      ]
+    },
+    {
+      "id": 18,
+      "type": "StringConcatenate",
+      "title": "自動結合 01-04",
+      "pos": [
+        1310,
+        205
+      ],
+      "size": [
+        320,
+        60
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 17,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "string_a",
+          "type": "STRING",
+          "link": 7,
+          "widget": {
+            "name": "string_a"
+          }
+        },
+        {
+          "name": "string_b",
+          "type": "STRING",
+          "link": 8,
+          "widget": {
+            "name": "string_b"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            9
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "StringConcatenate"
+      },
+      "widgets_values": [
+        "",
+        "",
+        "\n"
+      ]
+    },
+    {
+      "id": 19,
+      "type": "StringConcatenate",
+      "title": "自動結合 01-05",
+      "pos": [
+        1310,
+        270
+      ],
+      "size": [
+        320,
+        60
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 18,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "string_a",
+          "type": "STRING",
+          "link": 9,
+          "widget": {
+            "name": "string_a"
+          }
+        },
+        {
+          "name": "string_b",
+          "type": "STRING",
+          "link": 10,
+          "widget": {
+            "name": "string_b"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            11
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "StringConcatenate"
+      },
+      "widgets_values": [
+        "",
+        "",
+        "\n"
+      ]
+    },
+    {
+      "id": 20,
+      "type": "StringConcatenate",
+      "title": "自動結合 01-06",
+      "pos": [
+        1310,
+        335
+      ],
+      "size": [
+        320,
+        60
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 19,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "string_a",
+          "type": "STRING",
+          "link": 11,
+          "widget": {
+            "name": "string_a"
+          }
+        },
+        {
+          "name": "string_b",
+          "type": "STRING",
+          "link": 12,
+          "widget": {
+            "name": "string_b"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            14,
+            16
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "StringConcatenate"
+      },
+      "widgets_values": [
+        "",
+        "",
+        "\n"
+      ]
+    },
+    {
+      "id": 21,
+      "type": "CLIPTextEncode",
+      "title": "Positive（自動入力）",
+      "pos": [
+        1310,
+        440
+      ],
+      "size": [
+        320,
+        160
+      ],
+      "flags": {},
+      "order": 20,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 13
+        },
+        {
+          "name": "text",
+          "type": "STRING",
+          "link": 14,
+          "widget": {
+            "name": "text"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            18
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        ""
+      ]
+    },
+    {
+      "id": 22,
+      "type": "CLIPTextEncode",
+      "title": "Negative（避けたい特徴）",
+      "pos": [
+        1310,
+        665
+      ],
+      "size": [
+        320,
+        190
+      ],
+      "flags": {},
+      "order": 21,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 15
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            19
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        "worst quality, low quality, score_1, score_2, score_3, artist name, blurry, jpeg artifacts, chromatic aberration"
+      ]
+    },
+    {
+      "id": 23,
+      "type": "PreviewAny",
+      "title": "結合済みPositive（実行後）",
+      "pos": [
+        1310,
+        930
+      ],
+      "size": [
+        320,
+        310
+      ],
+      "flags": {},
+      "order": 22,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "source",
+          "type": "STRING",
+          "link": 16
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewAny"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 24,
+      "type": "Note",
+      "title": "サイズと再現性",
+      "pos": [
+        1700,
+        50
+      ],
+      "size": [
+        330,
+        185
+      ],
+      "flags": {},
+      "order": 23,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "Note"
+      },
+      "widgets_values": [
+        "Base v1: 30 steps / CFG 4。\n1024×1024から開始。幅・高さは16の倍数。\nseedは固定。同じ条件の比較後、別案はseedを変更。\nTurbo向け設定ではありません。"
+      ]
+    },
+    {
+      "id": 25,
+      "type": "EmptyLatentImage",
+      "title": "生成サイズ / 枚数",
+      "pos": [
+        1700,
+        295
+      ],
+      "size": [
+        330,
+        120
+      ],
+      "flags": {},
+      "order": 24,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            20
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "EmptyLatentImage"
+      },
+      "widgets_values": [
+        1024,
+        1024,
+        1
+      ]
+    },
+    {
+      "id": 26,
+      "type": "KSampler",
+      "title": "生成設定",
+      "pos": [
+        1700,
+        480
+      ],
+      "size": [
+        330,
+        305
+      ],
+      "flags": {},
+      "order": 25,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 17
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 18
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 19
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 20
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            21
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "KSampler"
+      },
+      "widgets_values": [
+        0,
+        "fixed",
+        30,
+        4,
+        "euler",
+        "simple",
+        1
+      ]
+    },
+    {
+      "id": 27,
+      "type": "VAEDecode",
+      "title": "画像に変換",
+      "pos": [
+        1700,
+        870
+      ],
+      "size": [
+        330,
+        90
+      ],
+      "flags": {},
+      "order": 26,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 21
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 22
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            23,
+            26
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 28,
+      "type": "Note",
+      "title": "必要な拡大だけ有効にする",
+      "pos": [
+        2100,
+        50
+      ],
+      "size": [
+        380,
+        220
+      ],
+      "flags": {},
+      "order": 27,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "Note"
+      },
+      "widgets_values": [
+        "初期状態: 拡大なし。\nA: 追加モデル不要の2倍拡大（補間）。\nB: 専用モデルで高画質化。\nAまたはBを右クリック > Mode > Always。\nBは下のモデル選択も必要です。\n戻すときはMode > Bypass。\n両方有効なら倍率が掛け合わされます。"
+      ]
+    },
+    {
+      "id": 29,
+      "type": "ImageScaleBy",
+      "title": "A: 2倍拡大（初期状態: 無効）",
+      "pos": [
+        2100,
+        335
+      ],
+      "size": [
+        380,
+        110
+      ],
+      "flags": {},
+      "order": 28,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 23
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            25
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageScaleBy"
+      },
+      "widgets_values": [
+        "lanczos",
+        2
+      ]
+    },
+    {
+      "id": 30,
+      "type": "UpscaleModelLoader",
+      "title": "B用: 拡大モデルを選択",
+      "pos": [
+        2100,
+        535
+      ],
+      "size": [
+        380,
+        80
+      ],
+      "flags": {},
+      "order": 29,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "UPSCALE_MODEL",
+          "type": "UPSCALE_MODEL",
+          "links": [
+            24
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "UpscaleModelLoader"
+      },
+      "widgets_values": [
+        ""
+      ]
+    },
+    {
+      "id": 31,
+      "type": "ImageUpscaleWithModel",
+      "title": "B: モデルで拡大（初期状態: 無効）",
+      "pos": [
+        2100,
+        720
+      ],
+      "size": [
+        380,
+        100
+      ],
+      "flags": {},
+      "order": 30,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "upscale_model",
+          "type": "UPSCALE_MODEL",
+          "link": 24
+        },
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 25
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            27
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageUpscaleWithModel"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 32,
+      "type": "Note",
+      "title": "拡大モデルと負荷",
+      "pos": [
+        2100,
+        950
+      ],
+      "size": [
+        380,
+        220
+      ],
+      "flags": {},
+      "order": 31,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "Note"
+      },
+      "widgets_values": [
+        "Bはmodels/upscale_models/に配置した対応モデルを使用。\n倍率はモデル固有（例: 2x / 4x）です。\nAは画素数を増やす補間で、AIによる細部の復元ではありません。\n生成サイズを上げずに拡大できますが、Bには追加メモリが必要です。"
+      ]
+    },
+    {
+      "id": 33,
+      "type": "PreviewImage",
+      "title": "元の生成画像",
+      "pos": [
+        2550,
+        60
+      ],
+      "size": [
+        390,
+        415
+      ],
+      "flags": {},
+      "order": 32,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 26
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 34,
+      "type": "SaveImage",
+      "title": "最終画像（PNG保存）",
+      "pos": [
+        2550,
+        570
+      ],
+      "size": [
+        390,
+        510
+      ],
+      "flags": {},
+      "order": 33,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 27
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "SaveImage"
+      },
+      "widgets_values": [
+        "generation/anima/ComfyUI"
+      ]
+    },
+    {
+      "id": 35,
+      "type": "Note",
+      "title": "保存先",
+      "pos": [
+        2550,
+        1150
+      ],
+      "size": [
+        390,
+        100
+      ],
+      "flags": {},
+      "order": 34,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "Note"
+      },
+      "widgets_values": [
+        "output/generation/anima/\n拡大OFFなら元サイズ、ONなら拡大後を保存。"
+      ]
+    }
+  ],
+  "links": [
+    [
+      1,
+      2,
+      0,
+      6,
+      0,
+      "MODEL"
+    ],
+    [
+      2,
+      6,
+      0,
+      7,
+      0,
+      "MODEL"
+    ],
+    [
+      3,
+      9,
+      0,
+      16,
+      0,
+      "STRING"
+    ],
+    [
+      4,
+      10,
+      0,
+      16,
+      1,
+      "STRING"
+    ],
+    [
+      5,
+      16,
+      0,
+      17,
+      0,
+      "STRING"
+    ],
+    [
+      6,
+      11,
+      0,
+      17,
+      1,
+      "STRING"
+    ],
+    [
+      7,
+      17,
+      0,
+      18,
+      0,
+      "STRING"
+    ],
+    [
+      8,
+      12,
+      0,
+      18,
+      1,
+      "STRING"
+    ],
+    [
+      9,
+      18,
+      0,
+      19,
+      0,
+      "STRING"
+    ],
+    [
+      10,
+      13,
+      0,
+      19,
+      1,
+      "STRING"
+    ],
+    [
+      11,
+      19,
+      0,
+      20,
+      0,
+      "STRING"
+    ],
+    [
+      12,
+      14,
+      0,
+      20,
+      1,
+      "STRING"
+    ],
+    [
+      13,
+      3,
+      0,
+      21,
+      0,
+      "CLIP"
+    ],
+    [
+      14,
+      20,
+      0,
+      21,
+      1,
+      "STRING"
+    ],
+    [
+      15,
+      3,
+      0,
+      22,
+      0,
+      "CLIP"
+    ],
+    [
+      16,
+      20,
+      0,
+      23,
+      0,
+      "STRING"
+    ],
+    [
+      17,
+      7,
+      0,
+      26,
+      0,
+      "MODEL"
+    ],
+    [
+      18,
+      21,
+      0,
+      26,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      19,
+      22,
+      0,
+      26,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      20,
+      25,
+      0,
+      26,
+      3,
+      "LATENT"
+    ],
+    [
+      21,
+      26,
+      0,
+      27,
+      0,
+      "LATENT"
+    ],
+    [
+      22,
+      4,
+      0,
+      27,
+      1,
+      "VAE"
+    ],
+    [
+      23,
+      27,
+      0,
+      29,
+      0,
+      "IMAGE"
+    ],
+    [
+      24,
+      30,
+      0,
+      31,
+      0,
+      "UPSCALE_MODEL"
+    ],
+    [
+      25,
+      29,
+      0,
+      31,
+      1,
+      "IMAGE"
+    ],
+    [
+      26,
+      27,
+      0,
+      33,
+      0,
+      "IMAGE"
+    ],
+    [
+      27,
+      31,
+      0,
+      34,
+      0,
+      "IMAGE"
+    ]
+  ],
+  "groups": [
+    {
+      "id": 1,
+      "title": "01 モデル / LoRA",
+      "bounding": [
+        0,
+        0,
+        400,
+        1290
+      ],
+      "color": "#3f789e",
+      "font_size": 22,
+      "flags": {}
+    },
+    {
+      "id": 2,
+      "title": "02 プロンプト入力（番号順に自動結合）",
+      "bounding": [
+        430,
+        0,
+        830,
+        1290
+      ],
+      "color": "#548469",
+      "font_size": 22,
+      "flags": {}
+    },
+    {
+      "id": 3,
+      "title": "03 結合 / エンコード",
+      "bounding": [
+        1290,
+        0,
+        360,
+        1290
+      ],
+      "color": "#697782",
+      "font_size": 22,
+      "flags": {}
+    },
+    {
+      "id": 4,
+      "title": "04 生成",
+      "bounding": [
+        1680,
+        0,
+        370,
+        1290
+      ],
+      "color": "#97744a",
+      "font_size": 22,
+      "flags": {}
+    },
+    {
+      "id": 5,
+      "title": "05 アップスケール（任意）",
+      "bounding": [
+        2080,
+        0,
+        420,
+        1290
+      ],
+      "color": "#6d7698",
+      "font_size": 22,
+      "flags": {}
+    },
+    {
+      "id": 6,
+      "title": "06 保存",
+      "bounding": [
+        2530,
+        0,
+        430,
+        1290
+      ],
+      "color": "#548469",
+      "font_size": 22,
+      "flags": {}
+    }
+  ],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.55,
+      "offset": [
+        160,
+        120
+      ]
+    }
+  },
+  "version": 0.4
+}
