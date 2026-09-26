@@ -16,6 +16,8 @@ services:
       - ../models/Anima/loras:/ComfyUI/models/loras/anima:ro
       # --- Shared upscalers / bundled workflows ---
       - ../models/upscale_models:/ComfyUI/models/upscale_models:ro
+      # --- Danbooru tagger model cache / bundled workflows ---
+      - ../models/wd14_tagger:/ComfyUI/custom_nodes/ComfyUI-WD14-Tagger/models
       - ../workflows:/ComfyUI/user/default/workflows/repository:ro
       # --- Qwen Image系 ---
       # - ../models/Qwen-Image:/ComfyUI/models
